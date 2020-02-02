@@ -15,6 +15,7 @@ from datetime import date
 
 from holidays.constants import JAN, MAR, MAY, JUN, JUL, AUG, DEC
 from holidays.holiday_base import HolidayBase
+from holidays.utils import get_gre_date
 
 
 class Kazakhstan(HolidayBase):
@@ -70,7 +71,7 @@ class Kazakhstan(HolidayBase):
 
         # First day of Qurban Ait - (hijari_year, 12, 10)
         if year >= 2006:
-            for date_obs in self.get_gre_date(year, 12, 10):
+            for date_obs in get_gre_date(year, 12, 10):
             hol_date = date_obs
             self[hol_date] = "Курбан-айт"
 
@@ -86,37 +87,6 @@ class Kazakhstan(HolidayBase):
         name = "День Независимости"
         self[date(year, DEC, 16)] = name
         self[date(year, DEC, 17)] = name
-        
-
-    def get_gre_date(self, year, Hmonth, Hday):
-        """
-        returns the gregorian date of the given gregorian calendar
-        yyyy year with Hijari Month & Day
-        """
-        try:
-            from hijri_converter import convert
-        except ImportError:
-            import warnings
-
-            def warning_on_one_line(message, category, filename, lineno,
-                                    file=None, line=None):
-                return filename + ': ' + str(message) + '\n'
-            warnings.formatwarning = warning_on_one_line
-            warnings.warn("Error estimating Islamic Holidays." +
-                          "To estimate, install hijri-converter library")
-            warnings.warn("pip install -U hijri-converter")
-            warnings.warn("(see https://hijri-converter.readthedocs.io/ )")
-            return []
-        Hyear = convert.Gregorian(year, 1, 1).to_hijri().datetuple()[0]
-        hrhs = []
-        hrhs.append(convert.Hijri(Hyear - 1, Hmonth, Hday).to_gregorian())
-        hrhs.append(convert.Hijri(Hyear, Hmonth, Hday).to_gregorian())
-        hrhs.append(convert.Hijri(Hyear + 1, Hmonth, Hday).to_gregorian())
-        hrh_dates = []
-        for hrh in hrhs:
-            if hrh.year == year:
-                hrh_dates.append(date(*hrh.datetuple()))
-        return hrh_dates
 
 
 class KZ(Kazakhstan):
