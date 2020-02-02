@@ -40,6 +40,7 @@ from .ireland import Ireland, IE
 from .italy import Italy, IT
 from .israel import Israel, ISR, IL
 from .japan import Japan, JP
+from .kazakhstan import Kazakhstan, KZ
 from .kenya import Kenya, KE
 from .lithuania import Lithuania, LT
 from .luxembourg import Luxembourg, LU
