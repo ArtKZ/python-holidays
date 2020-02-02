@@ -20,6 +20,7 @@ from holidays.utils import get_gre_date
 
 class Kazakhstan(HolidayBase):
     """
+    This class doesn't return any holidays before 1991-01-01.
     https://egov.kz/cms/en/articles/holidays-calend
     """
 
